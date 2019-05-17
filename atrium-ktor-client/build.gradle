@@ -1,0 +1,5 @@
+description = 'Atrium assertion functions for ktor-client'
+
+dependencies{
+    implementation "io.ktor:ktor-client-core-jvm:$ktor_version", excludeKotlin
+}
