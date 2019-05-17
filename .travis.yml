@@ -4,13 +4,30 @@ jdk:
   - oraclejdk9
   - oraclejdk11
 
+addons:
+    sonarcloud:
+        organization: "tegonal"
+        token:
+            secure: $SONAR_TOKEN
+
 before_install:
   - chmod +x gr
 
 install: true
 
 script:
-  - ./gr -i build
+    - ./gr -i build detekt
+    - |
+        if [ "$TRAVIS_TEST_RESULT" == 0 ] && [ "$TRAVIS_JDK_VERSION" == oraclejdk8 ]; then
+            ./gr detekt
+            sonar-scanner \
+                -Dsonar.projectVersion=0.1.0 \
+                -Dsonar.projectKey=tegonal_atrium-ktor \
+                -Dsonar.kotlin.detekt.reportPaths=build/reports/detekt/detekt.xml \
+                -Dsonar.sources="\
+                    atrium-ktor-client/src/main/kotlin" \
+                -Dsonar.tests=atrium-ktor-client/src/test/kotlin
+        fi
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
