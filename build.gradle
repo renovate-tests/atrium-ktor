@@ -69,6 +69,8 @@ subprojects {
         resetLicenses 'EUPL-1.2'
     }
 
+    apply plugin: 'ch.tutteli.kotlin.module.info'
+
     dependencies {
         implementation kotlinStdlib()
         implementation kotlinReflect()
