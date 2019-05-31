@@ -1,8 +1,6 @@
 package com.tegonal.atrium.ktor.server.tests
 
-import ch.tutteli.atrium.api.cc.en_GB.messageContains
-import ch.tutteli.atrium.api.cc.en_GB.toBe
-import ch.tutteli.atrium.api.cc.en_GB.toThrow
+import ch.tutteli.atrium.api.cc.en_GB.*
 import ch.tutteli.atrium.verbs.expect
 import io.ktor.application.Application
 import io.ktor.http.HttpStatusCode
@@ -58,6 +56,56 @@ object TestApplicationResponseAssertionsSpec : Spek({
         it("provides a shortcut") {
             val response = TestApplicationResponse(dummyApplicationCall)
             expect(response).content.toBe(null)
+        }
+    }
+
+    describe("headers") {
+        it("provides a shortcut to the ResponseHeaders object of a response") {
+            val response = TestApplicationResponse(dummyApplicationCall)
+            expect(response).headers.toBe(response.headers)
+        }
+    }
+
+    val response by memoized {
+        TestApplicationResponse(dummyApplicationCall).apply {
+            headers.append("Content-Type", "text/html; charset=utf-8", safeOnly = false)
+        }
+    }
+
+    describe("hasHeader with string") {
+
+        it("throws an exception if key does not exist, showing what key was tried to access") {
+            expect {
+                expect(response).hasHeader("non-existing-key", "hello")
+            }.toThrow<AssertionError> { messageContains("headers[non-existing-key]") }
+        }
+        it("throws if the value is not the expected one") {
+            expect {
+                expect(response).hasHeader("Content-Type", "hello")
+            }.toThrow<AssertionError> { messageContains("headers[Content-Type]: \"text/html; charset=utf-8\"") }
+        }
+        it("passes if the value is the expected one") {
+            expect(response)
+                .hasHeader("Content-Type", "text/html; charset=utf-8")
+                .hasHeader("Content-Type", "text/html; charset=utf-8") // check fluent API
+        }
+    }
+
+    describe("hasHeader with assertion creator lambda") {
+        it("throws an exception if key does not exist, showing what key was tried to access") {
+            expect {
+                expect(response).header("non-existing-key") { startsWith("hello") }
+            }.toThrow<AssertionError> { messageContains("headers[non-existing-key]") }
+        }
+        it("throws if the value is not the expected one") {
+            expect {
+                expect(response).header("Content-Type") { startsWith("hello") }
+            }.toThrow<AssertionError> { messageContains("headers[Content-Type]: \"text/html; charset=utf-8\"") }
+        }
+        it("passes if the value is the expected one") {
+            expect(response)
+                .header("Content-Type") { startsWith("text/html") }
+                .header("Content-Type") { endsWith("charset=utf-8") } // check fluent API
         }
     }
 })

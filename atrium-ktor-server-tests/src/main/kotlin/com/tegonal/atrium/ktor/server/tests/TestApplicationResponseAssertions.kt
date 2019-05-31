@@ -1,11 +1,16 @@
 package com.tegonal.atrium.ktor.server.tests
 
+import ch.tutteli.atrium.api.cc.en_GB.notToBeNull
 import ch.tutteli.atrium.api.cc.en_GB.property
 import ch.tutteli.atrium.api.cc.en_GB.toBe
 import ch.tutteli.atrium.creating.Assert
 import ch.tutteli.atrium.creating.AssertionPlantNullable
 import ch.tutteli.atrium.domain.builders.AssertImpl
+import ch.tutteli.atrium.reporting.translating.TranslatableWithArgs
+import ch.tutteli.atrium.reporting.translating.Untranslatable
+import io.ktor.client.response.HttpResponse
 import io.ktor.http.HttpStatusCode
+import io.ktor.response.ResponseHeaders
 import io.ktor.server.testing.TestApplicationResponse
 
 
@@ -41,3 +46,33 @@ fun Assert<TestApplicationResponse>.hasStatus(httpStatusCode: HttpStatusCode): A
  */
 val Assert<TestApplicationResponse>.content get(): AssertionPlantNullable<String?> =
     property(TestApplicationResponse::content)
+
+
+/**
+ * Shortcut for `property(HttpResponse::headers)`.
+ *
+ * @returns he [Assert] for the [HttpResponse.headers].
+ */
+val Assert<TestApplicationResponse>.headers get(): Assert<ResponseHeaders> = property(TestApplicationResponse::headers)
+
+/**
+ * Makes the assertion that the response has a header with the given [key] and the [expected] value.
+ *
+ * @returns The current [Assert] for a fluent API.
+ */
+fun Assert<TestApplicationResponse>.hasHeader(key: String, expected: String) =
+    apply { header(key) { toBe(expected) } }
+
+/**
+ * Makes the assertion that the response has a header with the given [key] and that its value holds the assertions
+ * created by the given [assertionCreator].
+ *
+ * @returns The current [Assert] for a fluent API.
+ */
+fun Assert<TestApplicationResponse>.header(key: String, assertionCreator: Assert<String>.() -> Unit) =
+    apply {
+        val l: () -> String? = { subject.headers[key] }
+        AssertImpl.feature.property(
+            this, l, TranslatableWithArgs(Untranslatable("headers[%s]"), key)
+        ).notToBeNull(assertionCreator)
+    }
