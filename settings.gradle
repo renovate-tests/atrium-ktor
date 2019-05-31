@@ -12,6 +12,6 @@ apply plugin: 'ch.tutteli.settings'
 
 //noinspection GroovyAssignabilityCheck
 include {
-    _ 'client'
+    kotlinJvmJs('client')
     _ 'server-tests'
 }

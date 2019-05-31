@@ -10,6 +10,7 @@ buildscript {
         ktor_version = '1.2.1'
 
         //test
+        spek_version = '2.0.5'
         detekt_version = '1.0.0-RC14'
     }
 
@@ -40,7 +41,7 @@ allprojects {
 apply plugin: "io.gitlab.arturbosch.detekt"
 detekt {
     failFast = true
-    input = files(subprojects*.collect{it.projectDir})
+    input = files(subprojects*.collect { it.projectDir })
     filters = ".*/resources/.*,.*$rootProject.name/.*/build/.*"
     config = files("$rootProject.projectDir/gradle/detekt.yml")
     reports {
@@ -48,17 +49,55 @@ detekt {
     }
 }
 
+apply plugin: 'ch.tutteli.kotlin.utils'
+kotlinutils.kotlinVersion = kotlin_version
 
-subprojects {
+configureCommonProjects()
+configureJsProjects()
+configureJvmProjects()
+
+def commonProjects = getCommonProjects()
+def jsProjects = getJsProjects()
+def jvmProjects = getJvmProjects()
+def multiplatformProjects = commonProjects + jsProjects + jvmProjects
+
+configure(commonProjects) {
+    dependencies {
+        implementation "ch.tutteli.atrium:atrium-cc-en_GB-robstoll-common:$atrium_version", excludeKotlin
+        testImplementation "org.spekframework.spek2:spek-dsl-metadata:$spek_version"
+    }
+    //TODO activate as soon as https://youtrack.jetbrains.com/issue/KT-30580 is fixed
+    compileTestKotlinCommon{
+        kotlinOptions.allWarningsAsErrors = false
+    }
+}
+
+configure(jsProjects) {
+    dependencies {
+        implementation "ch.tutteli.atrium:atrium-cc-en_GB-robstoll-js:$atrium_version", excludeKotlin
+    }
+}
+
+configure(getJvmProjects() + (subprojects - multiplatformProjects)) {
 
     apply plugin: 'kotlin'
-    apply plugin: 'ch.tutteli.kotlin.utils'
-    kotlinutils.kotlinVersion = kotlin_version
 
     apply plugin: 'ch.tutteli.dokka'
     tutteliDokka.githubUser = 'tegonal'
 
     apply plugin: 'ch.tutteli.spek'
+    spek.version = spek_version
+
+    apply plugin: 'ch.tutteli.kotlin.module.info'
+
+    dependencies {
+        implementation kotlinStdlib()
+        implementation kotlinReflect()
+        implementation "ch.tutteli.atrium:atrium-cc-en_GB-robstoll:$atrium_version", excludeKotlin
+    }
+}
+
+subprojects {
 
     apply plugin: 'ch.tutteli.publish'
     tutteliPublish {
@@ -67,14 +106,6 @@ subprojects {
         bintrayRepo = 'oss'
         manifestVendor = 'Tegonal GmbH'
         resetLicenses 'EUPL-1.2'
-    }
-
-    apply plugin: 'ch.tutteli.kotlin.module.info'
-
-    dependencies {
-        implementation kotlinStdlib()
-        implementation kotlinReflect()
-        implementation "ch.tutteli.atrium:atrium-cc-en_GB-robstoll:$atrium_version", excludeKotlin
     }
 }
 

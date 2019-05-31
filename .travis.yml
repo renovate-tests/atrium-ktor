@@ -25,9 +25,16 @@ script:
                 -Dsonar.projectKey=tegonal_atrium-ktor \
                 -Dsonar.kotlin.detekt.reportPaths=build/reports/detekt/detekt.xml \
                 -Dsonar.sources="\
-                    atrium-ktor-client/src/main/kotlin" \
-                -Dsonar.tests=atrium-ktor-client/src/test/kotlin \
-                -Dsonar.coverage.jacoco.xmlReportPaths="atrium-ktor-client/build/reports/jacoco/report.xml,"
+                    client/atrium-ktor-client-common/src/main/kotlin, \
+                    " \
+                -Dsonar.tests="
+                    client/atrium-ktor-client-common/src/test/kotlin, \
+                    atrium-ktor-server-tests/src/test/kotlin, \
+                    " \
+                -Dsonar.coverage.jacoco.xmlReportPaths="
+                    client/atrium-ktor-client-jvm/build/reports/jacoco/report.xml, \
+                    atrium-ktor-server-tests/build/reports/jacoco/report.xml, \
+                    "
         fi
 
 before_cache:

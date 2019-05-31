@@ -7,12 +7,11 @@ import io.ktor.http.HttpProtocolVersion
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.date.GMTDate
 import kotlinx.coroutines.io.ByteReadChannel
-import java.lang.IllegalStateException
 import kotlin.coroutines.CoroutineContext
 
 class SimpleHttpResponse(
     content: String = "",
-    override val headers: Headers =  Headers.Empty,
+    override val headers: Headers = Headers.Empty,
     override val status: HttpStatusCode = HttpStatusCode.OK,
     override val version: HttpProtocolVersion = HttpProtocolVersion.HTTP_1_1
 ) : HttpResponse() {
