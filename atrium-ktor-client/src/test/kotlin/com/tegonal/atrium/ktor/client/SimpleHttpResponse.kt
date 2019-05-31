@@ -7,6 +7,7 @@ import io.ktor.http.HttpProtocolVersion
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.date.GMTDate
 import kotlinx.coroutines.io.ByteReadChannel
+import java.lang.IllegalStateException
 import kotlin.coroutines.CoroutineContext
 
 class SimpleHttpResponse(
@@ -17,8 +18,8 @@ class SimpleHttpResponse(
 ) : HttpResponse() {
     override val content: ByteReadChannel = ByteReadChannel(content)
 
-    override val call: HttpClientCall get() = TODO("not implemented")
-    override val coroutineContext: CoroutineContext get() = TODO("not implemented")
-    override val requestTime: GMTDate get() = TODO("not implemented")
-    override val responseTime: GMTDate get() = TODO("not implemented")
+    override val call: HttpClientCall get() = throw IllegalStateException("not implemented")
+    override val coroutineContext: CoroutineContext get() = throw IllegalStateException("not implemented")
+    override val requestTime: GMTDate get() = throw IllegalStateException("not implemented")
+    override val responseTime: GMTDate get() = throw IllegalStateException("not implemented")
 }

@@ -10,7 +10,7 @@ buildscript {
         ktor_version = '1.2.0'
 
         //test
-        spek_version= '2.0.4'
+        detekt_version = '1.0.0-RC14'
     }
 
     repositories {
@@ -27,13 +27,29 @@ buildscript {
         classpath "ch.tutteli:tutteli-gradle-kotlin-utils:$tutteli_gradle_version"
         classpath "ch.tutteli:tutteli-gradle-publish:$tutteli_gradle_version"
         classpath "ch.tutteli:tutteli-gradle-spek:$tutteli_gradle_version"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
     }
 }
 
-subprojects {
+allprojects {
     repositories {
         jcenter()
     }
+}
+
+apply plugin: "io.gitlab.arturbosch.detekt"
+detekt {
+    failFast = true
+    input = files(subprojects*.collect{it.projectDir})
+    filters = ".*/resources/.*,.*$rootProject.name/.*/build/.*"
+    config = files("$rootProject.projectDir/gradle/detekt.yml")
+    reports {
+        xml.enabled = true
+    }
+}
+
+
+subprojects {
 
     apply plugin: 'kotlin'
     apply plugin: 'ch.tutteli.kotlin.utils'
