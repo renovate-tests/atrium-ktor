@@ -21,6 +21,10 @@ dependencies {
 }
 ```
 
+# Example
+
+Have a look at [ktor-seed](https://github.com/tegonal/ktor-seed)'s [ApplicationTest](https://github.com/tegonal/ktor-seed/blob/master/src/test/kotlin/com/tegonal/ApplicationTest.kt#29).
+
 # Contribute
 You are welcome to contribute to this project:
 - [open a bug report](https://github.com/tegonal/atrium-ktor/issues/new?template=bug_report.md) 
