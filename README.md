@@ -21,5 +21,13 @@ dependencies {
 }
 ```
 
+# Contribute
+You are welcome to contribute to this project:
+- [open a bug report](https://github.com/tegonal/atrium-ktor/issues/new?template=bug_report.md) 
+  if something does not work as you expected
+- [create a feature request](https://github.com/tegonal/atrium-ktor/issues/new?template=feature_request.md&title=[Feature]) 
+  if you miss something
+- contribute in another way, we appreciate it 😊
+
 # License
 Atrium-Ktor is licensed under [EUPL 1.2](https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12).
