@@ -21,13 +21,13 @@ object HttpResponseAssertionsSpec : Spek({
                     it("does not throw") {
                         expect(SimpleHttpResponse(status = statusCode))
                             .hasStatus(HttpStatusCode.NotFound)
-                            .hasStatus(HttpStatusCode.NotFound) //check we fluent works
+                            .hasStatus(HttpStatusCode.NotFound) // check fluent API
                     }
                 } else {
                     it("throws") {
                         expect {
                             expect(SimpleHttpResponse(status = statusCode)).hasStatus(HttpStatusCode.NotFound)
-                        }.toThrow<AssertionError> { }
+                        }.toThrow<AssertionError> { messageContains("status: $statusCode") }
                     }
                 }
             }
