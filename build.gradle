@@ -1,6 +1,6 @@
 buildscript {
     project.group = "com.tegonal.atrium.ktor"
-    project.version = "0.1.0"
+    project.version = "0.2.0-SNAPSHOT"
     project.description = "Atrium assertion functions for Ktor types"
 
     ext {
@@ -81,7 +81,8 @@ subprojects {
 Release & deploy a commit
 --------------------------------
 1. search for X.Y.Z-SNAPSHOT and replace with X.Y.Z
-2. update master:
+2. update version in Setup section in README (search for old version)
+3. update master:
     a) point to the tag
         1) change travis badge: replace `branch=master` with `branch=vX.Y.Z`
         2) search for `tree/master` and replace it with `tree/vX.Y.Z`
