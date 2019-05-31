@@ -1,6 +1,6 @@
 buildscript {
     project.group = "com.tegonal.atrium.ktor"
-    project.version = "0.1.0-SNAPSHOT"
+    project.version = "0.1.0"
     project.description = "Atrium assertion functions for Ktor types"
 
     ext {
@@ -75,3 +75,30 @@ subprojects {
         implementation "ch.tutteli.atrium:atrium-cc-en_GB-robstoll:$atrium_version", excludeKotlin
     }
 }
+
+/*
+
+Release & deploy a commit
+--------------------------------
+1. search for X.Y.Z-SNAPSHOT and replace with X.Y.Z
+2. update master:
+    a) point to the tag
+        1) change travis badge: replace `branch=master` with `branch=vX.Y.Z`
+        2) search for `tree/master` and replace it with `tree/vX.Y.Z`
+    b) commit (modified .travis.yml, build.gradle, README.md): git commit -a -m 'v.X.Y.Z'
+    c) git tag vX.Y.Z
+    d) git push origin vX.Y.Z
+4. deploy to bintray:
+    a) ./gr clean publishToBintray
+    b) Log in to bintray, check and publish new jars
+5. create release on github
+
+Prepare next dev cycle
+-----------------------
+1. point to master
+   a) update travis badge: replace `branch=vX.Y.Z` with `branch=master`
+   b) search for `tree/vX.Y.Z` and replace it with `tree/master`
+2. search for X.Y.Z and replace with X.Y.Z-SNAPSHOT
+3. commit & push changes
+
+*/
