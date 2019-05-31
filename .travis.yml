@@ -26,7 +26,8 @@ script:
                 -Dsonar.kotlin.detekt.reportPaths=build/reports/detekt/detekt.xml \
                 -Dsonar.sources="\
                     atrium-ktor-client/src/main/kotlin" \
-                -Dsonar.tests=atrium-ktor-client/src/test/kotlin
+                -Dsonar.tests=atrium-ktor-client/src/test/kotlin \
+                -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/report.xml
         fi
 
 before_cache:
