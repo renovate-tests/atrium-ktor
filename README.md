@@ -17,9 +17,20 @@ repositories {
     // maven { url "http://dl.bintray.com/tegonal/oss" }
 }
 dependencies {
-    testImplementation "com.tegonal.atrium.ktor:atrium-ktor-client:0.2.0"    
+    testImplementation "com.tegonal.atrium.ktor:atrium-ktor-client:0.2.0"
+    testImplementation "com.tegonal.atrium.ktor:atrium-ktor-server-tests:0.2.0"       
 }
 ```
+
+Depending on your use case you do not need all of the dependencies. 
+The naming of the sub-projects follow the one of Ktor. 
+
+For instance, if you write tests by using `kto-server-tests` (meaning something along the line of `withTestApplication(...)`)
+then it suffices to depend only on `atrium-ktor-server-tests`
+
+Also, the shown dependencies above are JVM dependencies. 
+Currently `atrium-ktor-client` is also available for Common (`-common`) and JS (`-js`). 
+Add the corresponding suffix, e.g. `atrium-ktor-client-js` for JS.
 
 # Example
 
