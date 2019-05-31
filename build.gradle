@@ -1,6 +1,6 @@
 buildscript {
     project.group = "com.tegonal.atrium.ktor"
-    project.version = "0.2.0-SNAPSHOT"
+    project.version = "0.2.0"
     project.description = "Atrium assertion functions for Ktor types"
 
     ext {
@@ -88,7 +88,7 @@ Release & deploy a commit
     a) point to the tag
         1) change travis badge: replace `branch=master` with `branch=vX.Y.Z`
         2) search for `tree/master` and replace it with `tree/vX.Y.Z`
-    b) commit (modified .travis.yml, build.gradle, README.md): git commit -a -m 'v.X.Y.Z'
+    b) commit (modified .travis.yml, build.gradle, README.md): git commit -a -m 'vX.Y.Z'
     c) git tag vX.Y.Z
     d) git push origin vX.Y.Z
 4. deploy to bintray:

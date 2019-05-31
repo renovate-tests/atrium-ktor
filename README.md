@@ -1,5 +1,5 @@
 [![EUPL](https://img.shields.io/badge/license-EUPL%201.2-brightgreen.svg)](https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12)
-[![Build Status Travis](https://travis-ci.org/tegonal/atrium-ktor.svg?branch=master)](https://travis-ci.org/tegonal/atrium-ktor)
+[![Build Status Travis](https://travis-ci.org/tegonal/atrium-ktor.svg?branch=v0.2.0)](https://travis-ci.org/tegonal/atrium-ktor)
 [![Build status AppVeyor](https://ci.appveyor.com/api/projects/status/ftbrft2lwo5v2tkg/branch/master?svg=true)](https://ci.appveyor.com/project/tegonal/atrium-ktor/branch/master)
 [![SonarCloud Status](https://sonarcloud.io/api/project_badges/measure?project=tegonal_atrium-ktor&metric=alert_status)](https://sonarcloud.io/dashboard?id=tegonal_atrium-ktor)
 
@@ -17,7 +17,7 @@ repositories {
     // maven { url "http://dl.bintray.com/tegonal/oss" }
 }
 dependencies {
-    testImplementation "com.tegonal.atrium.ktor:atrium-ktor-client:0.1.0"    
+    testImplementation "com.tegonal.atrium.ktor:atrium-ktor-client:0.2.0"    
 }
 ```
 
