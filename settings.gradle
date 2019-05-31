@@ -1,5 +1,5 @@
 buildscript {
-    gradle.ext.tutteli_plugins_version = '0.23.2'
+    gradle.ext.tutteli_plugins_version = '0.26.1'
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
     }
