@@ -1,6 +1,6 @@
 buildscript {
     project.group = "com.tegonal.atrium.ktor"
-    project.version = "0.3.0-SNAPSHOT"
+    project.version = "0.3.0"
     project.description = "Atrium assertion functions for Ktor types"
 
     ext {
