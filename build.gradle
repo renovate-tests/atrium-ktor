@@ -12,6 +12,20 @@ buildscript {
         //test
         spek_version = '2.0.5'
         detekt_version = '1.0.0-RC14'
+
+        srcAndResourcesFromJvmProject = { Project project ->
+            def nameWithoutSuffix = project.name.substring(rootProject.name.length() + 1, project.name.lastIndexOf('-'))
+            def jvmProject = prefixedProject(nameWithoutSuffix + '-jvm')
+            project.sourceSets {
+                main {
+                    kotlin { srcDirs += ["${jvmProject.projectDir}/src/main/kotlin"] }
+                    resources { srcDirs += ["${jvmProject.projectDir}/src/main/resources"] }
+                }
+                test {
+                    resources { srcDirs += ["${jvmProject.projectDir}/src/test/resources"] }
+                }
+            }
+        }
     }
 
     repositories {
@@ -26,11 +40,17 @@ buildscript {
         classpath("ch.tutteli:tutteli-gradle-kotlin-module-info:$gradle.ext.tutteli_plugins_version")
         classpath "ch.tutteli:tutteli-gradle-dokka:$tutteli_gradle_version"
         classpath "ch.tutteli:tutteli-gradle-kotlin-utils:$tutteli_gradle_version"
+        classpath "ch.tutteli:tutteli-gradle-project-utils:$gradle.ext.tutteli_plugins_version"
         classpath "ch.tutteli:tutteli-gradle-publish:$tutteli_gradle_version"
         classpath "ch.tutteli:tutteli-gradle-spek:$tutteli_gradle_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
     }
 }
+
+apply plugin: "ch.tutteli.project.utils"
+apply plugin: 'ch.tutteli.kotlin.utils'
+kotlinutils.kotlinVersion = kotlin_version
+
 
 allprojects {
     repositories {
@@ -48,9 +68,6 @@ detekt {
         xml.enabled = true
     }
 }
-
-apply plugin: 'ch.tutteli.kotlin.utils'
-kotlinutils.kotlinVersion = kotlin_version
 
 configureCommonProjects()
 configureJsProjects()
@@ -106,6 +123,7 @@ subprojects {
         bintrayRepo = 'oss'
         manifestVendor = 'Tegonal GmbH'
         resetLicenses 'EUPL-1.2'
+        signWithGpg = false //use bintray's public/private key
     }
 }
 
@@ -123,8 +141,9 @@ Release & deploy a commit
     c) git tag vX.Y.Z
     d) git push origin vX.Y.Z
 4. deploy to bintray:
-    a) ./gr clean publishToBintray
-    b) Log in to bintray, check and publish new jars
+    a) export CI=true
+    b) ./gr clean publishToBintray
+    c) Log in to bintray, check and publish new jars
 5. create release on github
 
 Prepare next dev cycle

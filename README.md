@@ -29,7 +29,7 @@ For instance, if you write tests by using `kto-server-tests` (meaning something 
 then it suffices to depend only on `atrium-ktor-server-tests`
 
 Also, the shown dependencies above are JVM dependencies. 
-Currently `atrium-ktor-client` is also available for Common (`-common`) and JS (`-js`). 
+Currently `atrium-ktor-client` is also available for Common (`-common`), Android (`-android`) and JS (`-js`). 
 Add the corresponding suffix, e.g. `atrium-ktor-client-js` for JS.
 
 # Example

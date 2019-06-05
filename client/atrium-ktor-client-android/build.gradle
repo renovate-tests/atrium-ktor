@@ -1,0 +1,7 @@
+description = 'Atrium assertion functions for ktor-client-core-android'
+
+dependencies{
+    implementation "io.ktor:ktor-client-android:$ktor_version", excludeKotlin
+}
+
+srcAndResourcesFromJvmProject(project)

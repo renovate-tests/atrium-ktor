@@ -1,3 +1,4 @@
+rootProject.name = 'atrium-ktor'
 buildscript {
     gradle.ext.tutteli_plugins_version = '0.26.1'
     repositories {
@@ -10,8 +11,19 @@ buildscript {
 
 apply plugin: 'ch.tutteli.settings'
 
+
+def kotlinJvmJsAndAndroidIfCi = { self, String suffix ->
+    if (System.getenv('CI')) {
+        self.kotlinJvmJsAndroid(suffix)
+    } else {
+        self.kotlinJvmJs(suffix)
+
+    }
+}
+
+
 //noinspection GroovyAssignabilityCheck
 include {
-    kotlinJvmJs('client')
+    kotlinJvmJsAndAndroidIfCi(delegate, 'client')
     _ 'server-tests'
 }
