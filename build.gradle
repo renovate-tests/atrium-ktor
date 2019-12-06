@@ -13,6 +13,9 @@ buildscript {
         spek_version = '2.0.8'
         detekt_version = '1.2.0'
 
+        //build
+        tutteli_plugins_version = '0.26.1'
+
         srcAndResourcesFromJvmProject = { Project project ->
             def nameWithoutSuffix = project.name.substring(rootProject.name.length() + 1, project.name.lastIndexOf('-'))
             def jvmProject = prefixedProject(nameWithoutSuffix + '-jvm')
@@ -34,15 +37,14 @@ buildscript {
         jcenter()
     }
 
-    def tutteli_gradle_version = gradle.ext.tutteli_plugins_version
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath("ch.tutteli:tutteli-gradle-kotlin-module-info:$gradle.ext.tutteli_plugins_version")
-        classpath "ch.tutteli:tutteli-gradle-dokka:$tutteli_gradle_version"
-        classpath "ch.tutteli:tutteli-gradle-kotlin-utils:$tutteli_gradle_version"
-        classpath "ch.tutteli:tutteli-gradle-project-utils:$gradle.ext.tutteli_plugins_version"
-        classpath "ch.tutteli:tutteli-gradle-publish:$tutteli_gradle_version"
-        classpath "ch.tutteli:tutteli-gradle-spek:$tutteli_gradle_version"
+        classpath("ch.tutteli:tutteli-gradle-kotlin-module-info:$tutteli_plugins_version")
+        classpath "ch.tutteli:tutteli-gradle-dokka:$tutteli_plugins_version"
+        classpath "ch.tutteli:tutteli-gradle-kotlin-utils:$tutteli_plugins_version"
+        classpath "ch.tutteli:tutteli-gradle-project-utils:$tutteli_plugins_version"
+        classpath "ch.tutteli:tutteli-gradle-publish:$tutteli_plugins_version"
+        classpath "ch.tutteli:tutteli-gradle-spek:$tutteli_plugins_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
     }
 }
@@ -51,6 +53,15 @@ apply plugin: "ch.tutteli.project.utils"
 apply plugin: 'ch.tutteli.kotlin.utils'
 kotlinutils.kotlinVersion = kotlin_version
 
+configurations{
+    dependabot
+}
+
+dependencies {
+    // helps dependabot to recognise versions which it should update
+    dependabot "ch.tutteli.atrium:atrium-cc-en_GB-robstoll:$atrium_version"
+    dependabot "io.ktor:ktor-client-android:$ktor_version"
+}
 
 allprojects {
     repositories {
