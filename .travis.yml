@@ -13,12 +13,12 @@ addons:
             secure: $SONAR_TOKEN
 
 before_install:
-  - chmod +x gr
+  - chmod +x ./gradlew
 
 install: true
 
 script:
-    - ./gr -i build
+    - ./gradlew -i build
     - |
         if [ "$TRAVIS_TEST_RESULT" == 0 ] && [ "$TRAVIS_JDK_VERSION" == oraclejdk8 ]; then
             ./gr detekt
