@@ -11,7 +11,7 @@ buildscript {
 
         //test
         spek_version = '2.0.9'
-        detekt_version = '1.3.1'
+        detekt_version = '1.4.0'
 
         //build
         tutteli_plugins_version = '0.31.2'
