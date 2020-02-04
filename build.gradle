@@ -14,7 +14,7 @@ buildscript {
         detekt_version = '1.5.0'
 
         //build
-        tutteli_plugins_version = '0.32.0'
+        tutteli_plugins_version = '0.32.1'
 
         srcAndResourcesFromJvmProject = { Project project ->
             def nameWithoutSuffix = project.name.substring(rootProject.name.length() + 1, project.name.lastIndexOf('-'))
