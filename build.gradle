@@ -14,7 +14,7 @@ buildscript {
         detekt_version = '1.6.0'
 
         //build
-        tutteli_plugins_version = '0.32.1'
+        tutteli_plugins_version = gradle.ext.tutteli_plugins_version
 
         srcAndResourcesFromJvmProject = { Project project ->
             def nameWithoutSuffix = project.name.substring(rootProject.name.length() + 1, project.name.lastIndexOf('-'))
@@ -52,16 +52,6 @@ buildscript {
 apply plugin: "ch.tutteli.project.utils"
 apply plugin: 'ch.tutteli.kotlin.utils'
 kotlinutils.kotlinVersion = kotlin_version
-
-configurations{
-    dependabot
-}
-
-dependencies {
-    // helps dependabot to recognise versions which it should update
-    dependabot "ch.tutteli.atrium:atrium-cc-en_GB-robstoll:$atrium_version"
-    dependabot "io.ktor:ktor-client-android:$ktor_version"
-}
 
 allprojects {
     repositories {
