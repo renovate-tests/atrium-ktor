@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "groupName": "tutteli gradle plugins",
+      "packagePatterns": ["^ch.tutteli:tutteli-gradle"]
+    },
+    {
+      "groupName": "Atrium",
+      "packagePatterns": ["^ch.tutteli.atrium:"]
+    },
+    {
+      "groupName": "Ktor",
+      "packagePatterns": ["^io.ktor:"] 
+    }
+  ]
+}
